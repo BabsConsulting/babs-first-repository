@@ -105,7 +105,6 @@
                     var amount = document.getElementById("AMOUNT").value;  
                     var firstName = document.getElementById("FIRST_NAME").value;
                     var lastName = document.getElementById("LAST_NAME").value;
-                    var comments = document.getElementById("COMMENTS").value;
                     var email = document.getElementById("EMAIL").value;  
   
                     if (amount < 1 || firstName == "" || lastName == "" || email == "" ) {
@@ -242,23 +241,7 @@
                         <![endif]-->
 
                     </fieldset>
-                </li><li id="foli109" 
-                         class="notranslate      "><label class="desc" id="title109" for="COMMENTS">
-                        Additional Comments
-                    </label>
-
-                    <div>
-                        <textarea id="COMMENTS" 
-                                  name="COMMENTS" 
-                                  class="field textarea medium" 
-                                  spellcheck="true" 
-                                  rows="10" cols="50" 
-                                  tabindex="10" 
-                                  onkeyup=""
-                                  ></textarea>
-
-                    </div>
-                </li> <li class="buttons ">
+                </li><li class="buttons ">
                     <div>
                         <input type="hidden" name="cmd" value="_s-xclick">
                         <input type="hidden" name="hosted_button_id" value="VL56U8GGT9J7Q">
