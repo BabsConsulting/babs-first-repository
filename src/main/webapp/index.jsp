@@ -17,26 +17,49 @@
             }
 
             #slidenav {
-                margin:0 auto;
+                margin-left:0px;
                 width:auto;
                 height:auto;
                 padding:5px 5px;
                 display:none;
             }
             #open {
-                margin:0 auto;
-                width:200px;
-                text-align:center;
+                visibility:hidden;
+                margin-left:30px;
+                text-align:left;
                 padding:5px;
-                font-size:30px;
+                font-size:25px;
             }
             input.currency 
             {
                 text-align:right;
             }
+            #footer {
+                padding-left: 30px;
+                margin: 0px;
+                position:absolute;
+                bottom:0;
+                width:860px;
+                height:40px;   /* Height of the footer */
+            }
+            #container {
+                height:100%;
+                margin: 0 auto 10px;
+                width: 860px
+            }
         </style>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
         <script type="text/javascript">
+            var timeDelayToShowBuyLink = 141000;  // 1000 = 1 sec
+            $(window).load(function() {
+                // Make link appear after some predetermined time
+                if(document.getElementById("open")) {
+                    setTimeout(function() { document.getElementById("open").style.visibility = "visible"; }, timeDelayToShowBuyLink);
+                }
+                
+                
+            });
+
             $(document).ready(function() {
                 $('#slidenav').animate({
                     marginTop: '-380px'
@@ -54,6 +77,9 @@
                         marginTop: '-380px'
                     }, 500);
                 });
+                //reload footer
+                document.getElementById("footer").style.visibility = "hidden";
+                document.getElementById("footer").style.visibility = "visible";
             });
             
             function dual_submit(){
@@ -168,9 +194,8 @@
             -->
         </style>
     </head>
-    <body>
+    <body id="container">
         <Br/><BR/>
-
         <iframe width="800" height="400" src="http://www.youtube.com/embed/2wNKv0GqWpg?autoplay=1" frameborder="0" allowfullscreen></iframe>
 
         <div id="slidenav" class="ltr">
@@ -181,7 +206,7 @@
             <div class="marginal">
                 Please fill out the form below to make a donation today <br>
 
-                Help the MSC Choir move closer to our goal of releasing the CD Album! <BR>(It's secure, quick and easy!)
+                Support Mercy Seat Chapel choir with the 2013 CD Project! <BR>(It's secure, quick and easy!)
             </div>
         </p>
         <p align="left" class="Plain style2">Note: All donations of $2 or more are tax deductible. Fields marked with a <span id="req_1" class="req">*</span> are required. </p>
@@ -246,7 +271,7 @@
                         <input type="hidden" name="cmd" value="_s-xclick">
                         <input type="hidden" name="hosted_button_id" value="VL56U8GGT9J7Q">
                         <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-                        <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                        <img alt="donate button" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
                     </div>
                 </li>
 
@@ -256,5 +281,7 @@
     <div id="open">
         <a href="#">Support Mercy Seat Choir</a>
     </div>
+    <div id="footer">Copyright&nbsp;&copy;&nbsp;2005&nbsp;-&nbsp;2012&nbsp;<a href="http://www.mercyseatchapel.org">Mercy Seat Chapel</a>.&nbsp;All Rights Reserved. <div>WEBSOLUTIONS PROVIDED BY: <a href="mailto:ayodeji@babaniyi.ws">FAB VENTURES, Inc.</a></div></div>
+
 </body>
 </html>
