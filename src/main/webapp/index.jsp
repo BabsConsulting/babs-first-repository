@@ -35,10 +35,9 @@
                 text-align:right;
             }
             #footer {
-                padding-left: 30px;
                 margin: 0px;
                 position:absolute;
-                bottom:0;
+                top:950px;
                 width:860px;
                 height:40px;   /* Height of the footer */
             }
@@ -70,12 +69,12 @@
                     $("#open").attr("style", "display:none");
                     $('#slidenav').animate({
                         marginTop: '0'
-                    }, 500);
+                    }, 50);
                 },
                 function(){
                     $('#slidenav').animate({
                         marginTop: '-380px'
-                    }, 500);
+                    }, 50);
                 });
                 //reload footer
                 document.getElementById("footer").style.visibility = "hidden";
@@ -211,10 +210,6 @@
         </p>
         <p align="left" class="Plain style2">Note: All donations of $2 or more are tax deductible. Fields marked with a <span id="req_1" class="req">*</span> are required. </p>
         <form id="form62" name="form62" class="wufoo topLabel page" autocomplete="off" action="javascript:validateForm()" method="post" >
-            <header id="header" class="info">
-                <div></div>
-            </header>
-
             <ul>
                 <li id="foli1" class="notranslate      ">
                     <label class="desc" id="title1" for="FIRST_NAME">
@@ -279,7 +274,7 @@
         </form>
     </div>
     <div id="open">
-        <a href="#">Support Mercy Seat Choir</a>
+        <a href="#">Support Mercy Seat Chapel Choir</a>
     </div>
     <div id="footer">Copyright&nbsp;&copy;&nbsp;2005&nbsp;-&nbsp;2012&nbsp;<a href="http://www.mercyseatchapel.org">Mercy Seat Chapel</a>.&nbsp;All Rights Reserved. <div>WEBSOLUTIONS PROVIDED BY: <a href="mailto:ayodeji@babaniyi.ws">FAB VENTURES, Inc.</a></div></div>
 
