@@ -6,19 +6,21 @@ package net.mscchoir.donate.domain.entity;
 
 import java.util.List;
 import javax.persistence.*;
+import org.hibernate.annotations.Cascade;
 
 /**
  *
  * @author bossbabs
  */
 @Entity
-@Table(name = "FEES")
+@Table(name = "ADDRESS")
 public class Address extends BaseEntity {
 
-    @ManyToMany(mappedBy = "addresses", cascade = {}, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "addresses", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "donor_has_address", joinColumns = {
         @JoinColumn(name = "address_id", referencedColumnName = "address_id")}, inverseJoinColumns = {
         @JoinColumn(name = "donor_id", referencedColumnName = "donor_id")})
+    @Cascade({org.hibernate.annotations.CascadeType.REPLICATE})
     private List<Donor> donors;
     private static long serialVersionUID = 1L;
 

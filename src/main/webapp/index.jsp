@@ -49,7 +49,7 @@
         </style>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
         <script type="text/javascript">
-            var timeDelayToShowBuyLink = 141000;  // 1000 = 1 sec
+            var timeDelayToShowBuyLink = 1000;//141000;  // 1000 = 1 sec
             $(window).load(function() {
                 // Make link appear after some predetermined time
                 if(document.getElementById("open")) {
@@ -83,12 +83,13 @@
             
             function dual_submit(){
                 var f = document.forms[0];
-                /*f.setAttribute('target','_myHidFrame');
-                f.setAttribute('action', 'your url');
-                f.submit();*/
+                f.setAttribute('target','_myHidFrame');
+                f.setAttribute('action', 'donate');
+                f.submit();
+                /*
                 f.setAttribute('target','_self');
                 f.setAttribute('action','https://www.paypal.com/cgi-bin/webscr');
-                f.submit();
+                f.submit();*/
 
             }
         </script>
@@ -209,7 +210,7 @@
             </div>
         </p>
         <p align="left" class="Plain style2">Note: All donations of $2 or more are tax deductible. Fields marked with a <span id="req_1" class="req">*</span> are required. </p>
-        <form id="form62" name="form62" class="wufoo topLabel page" autocomplete="off" action="javascript:validateForm()" method="post" >
+        <form id="form62" name="form62" class="wufoo topLabel page" autocomplete="off" action="donate" method="post" >
             <ul>
                 <li id="foli1" class="notranslate      ">
                     <label class="desc" id="title1" for="FIRST_NAME">

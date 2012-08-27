@@ -6,6 +6,7 @@ package net.mscchoir.donate.domain.entity;
 
 import java.math.BigDecimal;
 import javax.persistence.*;
+import org.hibernate.annotations.Cascade;
 /**
  *
  * @author bossbabs
@@ -20,8 +21,9 @@ public class Donation extends BaseEntity {
     private Long id;
     @Column(name="REFERER", nullable = true)
     private String referer;
-    @ManyToOne(cascade = {}, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     @JoinColumn(name = "DONOR_ID") 
+    @Cascade({org.hibernate.annotations.CascadeType.ALL})
     private Donor donor;
     @Column(name = "AMOUNT", precision = 2, nullable = false)
     private BigDecimal amount;

@@ -6,6 +6,7 @@ package net.mscchoir.donate.domain.entity;
 
 import java.util.Set;
 import javax.persistence.*;
+import org.hibernate.annotations.Cascade;
 
 /**
  *
@@ -14,7 +15,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "DONOR")
 public class Donor extends BaseEntity {
-    @OneToMany(mappedBy = "donor")
+    @OneToMany(mappedBy = "donor", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @Cascade({org.hibernate.annotations.CascadeType.ALL})
     private Set<Donation> donations;
 
     private static final long serialVersionUID = 1L;
@@ -29,7 +31,8 @@ public class Donor extends BaseEntity {
     @JoinTable(name = "donor_has_address", joinColumns = {
         @JoinColumn(name = "donor_id", referencedColumnName = "donor_id")}, inverseJoinColumns = {
         @JoinColumn(name = "address_id", referencedColumnName = "address_id")})
-    @ManyToMany(cascade = {}, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @Cascade({org.hibernate.annotations.CascadeType.ALL})
     private Set<Address> addresses;
     @Column(name="EMAIL")
     private String email;

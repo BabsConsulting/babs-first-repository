@@ -18,6 +18,7 @@ public class DonationService extends DefaultService<Donation>{
         Donation donation = new Donation();
         donation.setAmount(amount);
         donation.setDonor(donor);
+        donor.getDonations().add(donation);
         donation.setReferer(referer);
         this.createOrUpdate(donation);
         return donation;

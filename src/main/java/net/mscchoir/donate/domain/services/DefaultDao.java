@@ -6,31 +6,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.Resource;
-import javax.ejb.Local;
-import javax.ejb.SessionContext;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import net.mscchoir.donate.domain.entity.Address;
 import net.mscchoir.donate.domain.entity.BaseEntity;
+import net.mscchoir.donate.util.CustomHibernateDaoSupport;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
-import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 
-/**
- * <p> Base EJB3 DAO Class: is able to create, update, remove, load, and find
- * objects. </p>
- */
-@TransactionAttribute(TransactionAttributeType.REQUIRED)
-@Local({BaseDao.class})
-public abstract class DefaultDao<T extends BaseEntity>
-        implements BaseDao<T, Long> {
 
+public abstract class DefaultDao<T extends BaseEntity> extends CustomHibernateDaoSupport implements BaseDao<T, Long>
+{
     private Class<? extends T> type;
 
     public DefaultDao() {
@@ -63,64 +48,24 @@ public abstract class DefaultDao<T extends BaseEntity>
         }
     }
     private static final Log LOG = LogFactory.getLog(DefaultDao.class);
-    /**
-     * Session Context Injection
-     */
-    @Resource
-    protected SessionContext context;
-    /**
-     * Inject persistence context donateEntityManager
-     */
-    @PersistenceContext(unitName = "donateEntityManager")
-    protected EntityManager emanager;
-    @PersistenceContext(unitName = "hibernateSession")
-    private Session hibernateSession;
-
-    // For unit testing outside of container - persistence context not injected
-    /**
-     * @return the context
-     */
-    public SessionContext getContext() {
-        return this.context;
-    }
-
-    /**
-     * @param contextIn the context to set
-     */
-    public void setContext(SessionContext contextIn) {
-        this.context = contextIn;
-    }
-
-    /**
-     * @return the emanager
-     */
-    public EntityManager getEmanager() {
-        return this.emanager;
-    }
-
-    /**
-     * @param emanagerIn the emanager to set
-     */
-    public void setEmanager(EntityManager emanagerIn) {
-        this.emanager = emanagerIn;
-    }
+    
 
     @Override
     public void saveOrUpdate(T entity) throws Exception {
         if (entity.getCreatedDate() == null) //persist
         {
             preCreate(entity);
-            emanager.persist(entity);
+            getHibernateTemplate().persist(entity);
         } else {
             preUpdate(entity);
-            emanager.merge(entity);
+            getHibernateTemplate().merge(entity);
         }
-        emanager.flush();
+        getHibernateTemplate().flush();
     }
 
     @Override
     public T findById(Long id) throws Exception {
-        final Object obj = emanager.find(type, id);
+        final Object obj = getHibernateTemplate().get(type, id);
         return (T) obj;
     }
 
@@ -140,7 +85,7 @@ public abstract class DefaultDao<T extends BaseEntity>
         } // end if
 
 
-        final Criteria criteria = hibernateSession.createCriteria(typeToSearch);
+        final Criteria criteria = getSession().createCriteria(typeToSearch);
 
         populateCritieria(searchCriteria, criteria);
 
@@ -172,13 +117,11 @@ public abstract class DefaultDao<T extends BaseEntity>
     }
 
     @Override
-    public List<T> findAll() throws Exception{
+    public List<T> findAll() throws Exception {
         List<T> result = new ArrayList();
         if (type != null) {
-            Query query = emanager.createNamedQuery(type.getSimpleName() + ".findAll");
-            result = query.getResultList();
+            result =  getHibernateTemplate().find(type.getSimpleName() + ".findAll");
         }
-
         return result;
     }
 
@@ -189,8 +132,8 @@ public abstract class DefaultDao<T extends BaseEntity>
 
     @Override
     public void delete(T entity) throws Exception {
-        emanager.remove(entity);
-        emanager.flush();
+        getHibernateTemplate().delete(entity);
+        getHibernateTemplate().flush();
     }
 
     protected void preCreate(T entity) {
@@ -200,20 +143,6 @@ public abstract class DefaultDao<T extends BaseEntity>
     protected void preUpdate(T entity) {
         entity.setUpdatedDate(new Date());
     }
-
-    /**
-     * @return the hibernateSession
-     */
-    public org.hibernate.Session getHibernateSession() {
-        return hibernateSession;
-    }
-
-    /**
-     * @param hibernateSession the hibernateSession to set
-     */
-    public void setHibernateSession(org.hibernate.Session hibernateSession) {
-        this.hibernateSession = hibernateSession;
-    }
-
+    
     protected abstract void populateCritieria(Map searchCriteria, Criteria criteria);
 }

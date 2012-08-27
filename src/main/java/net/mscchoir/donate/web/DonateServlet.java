@@ -11,11 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.mscchoir.donate.util.Status;
@@ -26,17 +23,16 @@ import net.mscchoir.donate.domain.services.DonationService;
 import net.mscchoir.donate.domain.services.DonorSearchType;
 import net.mscchoir.donate.domain.services.DonorService;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.HttpRequestHandler;
 
 /**
  *
  * @author bossbabs
  */
-@WebServlet("/donatemsc")
-public class DonateServlet extends HttpServlet {
+public class DonateServlet implements HttpRequestHandler {
 
-    @Inject
     private DonationService donationService;
-    @Inject
+
     private DonorService donorService;
     private static final String PLS_ENTER = "Please enter a valid ";
 
@@ -58,10 +54,10 @@ public class DonateServlet extends HttpServlet {
         Status status = new Status();
         request.setAttribute("status", status);
 
-        String firstName = request.getParameter("first_name");
-        String lastName = request.getParameter("last_name");
-        String email = request.getParameter("email");
-        String referer = request.getParameter("referer");
+        String firstName = request.getParameter("FIRST_NAME");
+        String lastName = request.getParameter("LAST_NAME");
+        String email = request.getParameter("EMAIL");
+        String referer = request.getParameter("REFERER");
         BigDecimal amount = BigDecimal.valueOf(Double.parseDouble((request.getParameter("amount") != null)?request.getParameter("amount"):"0"));
 
         //Validations
@@ -87,6 +83,7 @@ public class DonateServlet extends HttpServlet {
         List donors = null;
         Donor donor = null;
         try {
+            
             donors = donorService.searchByCriteria(searchCriteria);
         } catch (Exception ex) {
             status.addException(ex);
@@ -123,7 +120,6 @@ public class DonateServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
@@ -138,7 +134,6 @@ public class DonateServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
@@ -149,8 +144,26 @@ public class DonateServlet extends HttpServlet {
      *
      * @return a String containing servlet description
      */
-    @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    @Override
+    public void handleRequest(HttpServletRequest hsr, HttpServletResponse hsr1) throws ServletException, IOException {
+        this.processRequest(hsr, hsr1);
+    }
+
+    /**
+     * @param donationService the donationService to set
+     */
+    public void setDonationService(DonationService donationService) {
+        this.donationService = donationService;
+    }
+
+    /**
+     * @param donorService the donorService to set
+     */
+    public void setDonorService(DonorService donorService) {
+        this.donorService = donorService;
+    }
 }
