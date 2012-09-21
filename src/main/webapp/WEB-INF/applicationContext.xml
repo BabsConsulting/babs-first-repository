@@ -16,12 +16,16 @@
         <property name="donorService" ref="donorService"/>
     </bean>
     
-    <bean id="donationDao" class="net.mscchoir.donate.domain.services.DonationDao"/>
+    <bean id="donationDao" class="net.mscchoir.donate.domain.services.DonationDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
     <bean id="donationService" class="net.mscchoir.donate.domain.services.DonationService">
         <property name="entityDao" ref="donationDao"/>
     </bean>
     
-    <bean id="donorDao" class="net.mscchoir.donate.domain.services.DonorDao"/>
+    <bean id="donorDao" class="net.mscchoir.donate.domain.services.DonorDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
     <bean id="donorService" class="net.mscchoir.donate.domain.services.DonorService">
         <property name="entityDao" ref="donorDao"/>
     </bean>

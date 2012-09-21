@@ -4,6 +4,7 @@
  */
 package net.mscchoir.donate.domain.entity;
 
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
 import org.hibernate.annotations.Cascade;
@@ -15,8 +16,7 @@ import org.hibernate.annotations.Cascade;
 @Entity
 @Table(name = "DONOR")
 public class Donor extends BaseEntity {
-    @OneToMany(mappedBy = "donor", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
-    @Cascade({org.hibernate.annotations.CascadeType.ALL})
+    @OneToMany(mappedBy = "donor", fetch = FetchType.LAZY)
     private Set<Donation> donations;
 
     private static final long serialVersionUID = 1L;
@@ -34,7 +34,7 @@ public class Donor extends BaseEntity {
     @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     @Cascade({org.hibernate.annotations.CascadeType.ALL})
     private Set<Address> addresses;
-    @Column(name="EMAIL")
+    @Column(name="EMAIL", unique=true)
     private String email;
     public Long getId() {
         return id;
@@ -129,6 +129,9 @@ public class Donor extends BaseEntity {
      * @return the donations
      */
     public Set<Donation> getDonations() {
+        if (donations == null)
+            donations = new HashSet<Donation>();
+        
         return donations;
     }
 

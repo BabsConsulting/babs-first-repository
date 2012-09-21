@@ -37,7 +37,7 @@
             #footer {
                 margin: 0px;
                 position:absolute;
-                top:950px;
+                top:1050px;
                 width:860px;
                 height:40px;   /* Height of the footer */
             }
@@ -76,100 +76,106 @@
                         marginTop: '-380px'
                     }, 50);
                 });
-                //reload footer
-                document.getElementById("footer").style.visibility = "hidden";
-                document.getElementById("footer").style.visibility = "visible";
-            });
+            //reload footer
+            document.getElementById("footer").style.visibility = "hidden";
+            document.getElementById("footer").style.visibility = "visible";
+        });
             
-            function dual_submit(){
-                var f = document.forms[0];
-                f.setAttribute('target','_myHidFrame');
-                f.setAttribute('action', 'donate');
-                f.submit();
-                /*
-                f.setAttribute('target','_self');
-                f.setAttribute('action','https://www.paypal.com/cgi-bin/webscr');
-                f.submit();*/
+        function dual_submit(){
+            var f = document.forms[0];
+            f.setAttribute('target','_myHidFrame');
+            f.setAttribute('action','https://www.paypal.com/cgi-bin/webscr');
+            f.submit();
+                
+            f.setAttribute('target','_self');
+            f.setAttribute('action','donate');
+            f.submit();
 
-            }
+        }
         </script>
         <script language="JavaScript" type="text/JavaScript">
-            <!--
-            function MM_swapImgRestore() { //v3.0
-                var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+        <!--
+        function MM_swapImgRestore() { //v3.0
+            var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+        }
+
+        function MM_preloadImages() { //v3.0
+            var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+                var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+                    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
             }
 
-            function MM_preloadImages() { //v3.0
-                var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
-                    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
-                        if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
-                }
+            function MM_findObj(n, d) { //v4.01
+                var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+                    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+                if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+                for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+                if(!x && d.getElementById) x=d.getElementById(n); return x;
+            }
 
-                function MM_findObj(n, d) { //v4.01
-                    var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
-                        d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
-                    if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
-                    for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
-                    if(!x && d.getElementById) x=d.getElementById(n); return x;
-                }
-
-                function MM_swapImage() { //v3.0
-                    var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
-                        if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
-                }
-                //-->
+            function MM_swapImage() { //v3.0
+                var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+                    if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+            }
+            //-->
         </script>
         <script>
-                <!--
-                function setAmountInput()
-                {
-                    var dollar = isNaN($('#Field0').val())?0:Number($('#Field0').val());
-                    var cents = isNaN($('#Field0-1').val())?0:Number($('#Field0-1').val());
-                    $('#AMOUNT').val((dollar + cents/100).toFixed(2));
-                }
-                function validateForm(){
-                    var amount = document.getElementById("AMOUNT").value;  
-                    var firstName = document.getElementById("FIRST_NAME").value;
-                    var lastName = document.getElementById("LAST_NAME").value;
-                    var email = document.getElementById("EMAIL").value;  
+            <!--
+            function setAmountInput()
+            {
+                var dollar = isNaN($('#Field0').val())?0:Number($('#Field0').val());
+                var cents = isNaN($('#Field0-1').val())?0:Number($('#Field0-1').val());
+                $('#AMOUNT').val((dollar + cents/100).toFixed(2));
+            }
+            function validateForm(){
+                var amount = document.getElementById("AMOUNT").value;  
+                var firstName = document.getElementById("FIRST_NAME").value;
+                var lastName = document.getElementById("LAST_NAME").value;
+                var email = document.getElementById("EMAIL").value; 
+                var referrer = document.getElementById("REFERRER");
   
-                    if (amount < 1 || firstName == "" || lastName == "" || email == "" ) {
-                        generalError("Please enter all fields marked with an '*'");
-                        return false;
-                    } else {
-                        if (checkEmail(email) != true) {
-                            generalError("Please enter a valid email address so that we can contact you."); 
-                            return false;
-                        }
-                        else {
-                            dual_submit();
-                        }
-                    }		
-                    
-                }
-                function checkEmail(emailaddr) {
-                    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailaddr)){
-                        return true;
-                    }
+                if (referrer == "")
+                {
+                    generalError("Please let us know who referred you to this page");
                     return false;
+                }  
+                if (amount < 1 || firstName == "" || lastName == "" || email == "" ) {
+                    generalError("Please enter all fields marked with an '*'");
+                    return false;
+                } else {
+                    if (checkEmail(email) != true) {
+                        generalError("Please enter a valid email address so that we can contact you."); 
+                        return false;
+                    }
+                    else {
+                        dual_submit();
+                    }
+                }		
+                    
+            }
+            function checkEmail(emailaddr) {
+                if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailaddr)){
+                    return true;
                 }
-                // Added .style to this document of: errorMsg
-                // Also added DIV tag for error_General
-                function generalError(msg) { drawShow( document.getElementById('error_General'), msg); }
+                return false;
+            }
+            // Added .style to this document of: errorMsg
+            // Also added DIV tag for error_General
+            function generalError(msg) { drawShow( document.getElementById('error_General'), msg); }
 
-                function generalErrorClear() { 
-                    var ele = document.getElementById('error_General')
-                    ele.style.visibility = 'hidden'; 
-                    ele.innerHTML = '';
-                }
+            function generalErrorClear() { 
+                var ele = document.getElementById('error_General')
+                ele.style.visibility = 'hidden'; 
+                ele.innerHTML = '';
+            }
 
-                function drawShow(ele,msg) { if(msg) {ele.innerHTML=msg;} ele.style.visibility = 'visible'; }
+            function drawShow(ele,msg) { if(msg) {ele.innerHTML=msg;} ele.style.visibility = 'visible'; }
 
-                function drawHide(ele) { 
-                    ele.style.visibility = 'hidden'; 
-                    ele.innerHTML = '';
-                }
-                //-->
+            function drawHide(ele) { 
+                ele.style.visibility = 'hidden'; 
+                ele.innerHTML = '';
+            }
+            //-->
         </script>
         <link href="wvstyle.css" tppabs="wvstyle.css" rel="stylesheet" type="text/css">
         <style type="text/css">
@@ -210,7 +216,7 @@
             </div>
         </p>
         <p align="left" class="Plain style2">Note: All donations of $2 or more are tax deductible. Fields marked with a <span id="req_1" class="req">*</span> are required. </p>
-        <form id="form62" name="form62" class="wufoo topLabel page" autocomplete="off" action="donate" method="post" >
+        <form id="form62" name="form62" class="wufoo topLabel page" autocomplete="off" action="javascript:dual_submit()" method="post" >
             <ul>
                 <li id="foli1" class="notranslate      ">
                     <label class="desc" id="title1" for="FIRST_NAME">
@@ -250,6 +256,15 @@
                         <input id="EMAIL" name="EMAIL" type="email" spellcheck="false" class="field text medium" value="" maxlength="255" tabindex="6" /> 
                     </div>
                 </li>
+                <li id="foli112" class="notranslate      ">
+                    <label class="desc" id="title113" for="REFERRER">
+                        Referrer
+                        <span id="req_0" class="req">*</span>
+                    </label>
+                    <div>
+                        <input id="EMAIL" name="REFERRER" type="text" spellcheck="false" class="field text medium" value="" maxlength="255" tabindex="7" required/> 
+                    </div>
+                </li>
                 <li id="foli10" class="notranslate      ">
                     <fieldset>
                         <![if !IE | (gte IE 8)]>
@@ -265,9 +280,9 @@
                 </li><li class="buttons ">
                     <div>
                         <input type="hidden" name="cmd" value="_s-xclick">
-                        <input type="hidden" name="hosted_button_id" value="VL56U8GGT9J7Q">
+                        <input type="hidden" name="hosted_button_id" value="XZZRJ4EDS325G">
                         <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-                        <img alt="donate button" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                        <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
                     </div>
                 </li>
 

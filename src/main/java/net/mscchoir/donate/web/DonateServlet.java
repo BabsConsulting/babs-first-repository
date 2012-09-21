@@ -57,7 +57,7 @@ public class DonateServlet implements HttpRequestHandler {
         String firstName = request.getParameter("FIRST_NAME");
         String lastName = request.getParameter("LAST_NAME");
         String email = request.getParameter("EMAIL");
-        String referer = request.getParameter("REFERER");
+        String referer = request.getParameter("REFERRER");
         BigDecimal amount = BigDecimal.valueOf(Double.parseDouble((request.getParameter("amount") != null)?request.getParameter("amount"):"0"));
 
         //Validations
@@ -103,6 +103,8 @@ public class DonateServlet implements HttpRequestHandler {
         } catch (Exception ex) {
             status.addException(ex);
             Logger.getLogger(DonateServlet.class.getName()).log(Level.SEVERE, null, ex);
+            view = request.getRequestDispatcher("index.jsp");
+            view.forward(request, response);
         }
 
         request.setAttribute("donor", donor);

@@ -11,13 +11,16 @@ import net.mscchoir.donate.util.CustomHibernateDaoSupport;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 
 
 public abstract class DefaultDao<T extends BaseEntity> extends CustomHibernateDaoSupport implements BaseDao<T, Long>
 {
     private Class<? extends T> type;
-
+    private Session session;
+    
+    
     public DefaultDao() {
         super();
 
@@ -52,15 +55,22 @@ public abstract class DefaultDao<T extends BaseEntity> extends CustomHibernateDa
 
     @Override
     public void saveOrUpdate(T entity) throws Exception {
-        if (entity.getCreatedDate() == null) //persist
+        if (session == null)
+            session = getSession();
+        if (entity == null) //persist
         {
             preCreate(entity);
-            getHibernateTemplate().persist(entity);
+            
         } else {
             preUpdate(entity);
-            getHibernateTemplate().merge(entity);
+            
         }
-        getHibernateTemplate().flush();
+        
+        session.getTransaction().begin();
+        session.saveOrUpdate(entity);
+        session.getTransaction().commit();
+        session.flush();
+        
     }
 
     @Override
@@ -84,8 +94,10 @@ public abstract class DefaultDao<T extends BaseEntity> extends CustomHibernateDa
             typeToSearch = type;
         } // end if
 
-
-        final Criteria criteria = getSession().createCriteria(typeToSearch);
+        if (session == null)
+            session = getSession();
+        session.getTransaction().begin();
+        final Criteria criteria = session.createCriteria(typeToSearch);
 
         populateCritieria(searchCriteria, criteria);
 
@@ -112,7 +124,7 @@ public abstract class DefaultDao<T extends BaseEntity> extends CustomHibernateDa
         } else {
             LOG.trace("get successful, records found");
         } // end if else...
-
+        session.getTransaction().commit();
         return resultList;
     }
 
@@ -145,4 +157,8 @@ public abstract class DefaultDao<T extends BaseEntity> extends CustomHibernateDa
     }
     
     protected abstract void populateCritieria(Map searchCriteria, Criteria criteria);
+
+    /**
+     * @return the session
+     */
 }

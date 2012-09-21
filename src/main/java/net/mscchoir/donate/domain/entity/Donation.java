@@ -21,11 +21,10 @@ public class Donation extends BaseEntity {
     private Long id;
     @Column(name="REFERER", nullable = true)
     private String referer;
-    @ManyToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DONOR_ID") 
-    @Cascade({org.hibernate.annotations.CascadeType.ALL})
     private Donor donor;
-    @Column(name = "AMOUNT", precision = 2, nullable = false)
+    @Column(name = "AMOUNT", nullable = false)
     private BigDecimal amount;
     
     
